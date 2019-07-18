@@ -144,6 +144,9 @@ type (
 		ToFeedback  bool              `json:"to_feedback"`
 		IsAnonymous bool              `json:"is_anonymous"`
 		PaymentUrl  string            `json:"payment_url"`
+    RecTradeID  string            `gorm:"type:varchar(20);not null" json:"rec_trade_id"`
+    BankTransactionID  string     `gorm:"type:varchar(50);not null" json:"bank_transaction_id"`
+    TappayApiStatus  null.Int     `json:"tappay_api_status"`
 	}
 
 	bankTransactionTime struct {
@@ -394,6 +397,9 @@ func (cr *clientResp) BuildFromPrimeDonationModel(d models.PayByPrimeDonation) {
 	cr.ToFeedback = false
 	cr.Frequency = oneTimeFrequency
 	cr.IsAnonymous = d.IsAnonymous.ValueOrZero()
+  cr.RecTradeID = d.RecTradeID
+  cr.BankTransactionID = d.BankTransactionID
+  cr.TappayApiStatus = d.TappayApiStatus
 }
 
 func (cr *clientResp) BuildFromOtherMethodDonationModel(d models.PayByOtherMethodDonation) {
